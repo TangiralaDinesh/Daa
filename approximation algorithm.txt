@@ -1,0 +1,85 @@
+AIM
+To write a C program to find the Vertex Cover of a given undirected graph using an approximation algorithm based on its adjacency matrix.
+
+---
+
+ALGORITHM
+
+1. Start the program
+2. Read the number of vertices n
+3. Read the adjacency matrix of the graph
+4. Initialize all vertices as not included in the vertex cover
+5. Traverse all edges of the graph
+6. If an edge (u, v) is not covered
+   include both u and v in the vertex cover
+7. Mark these vertices as visited
+8. Continue until all edges are covered
+9. Display the vertices in the vertex cover
+10. Stop
+
+---
+
+SOURCE CODE
+
+#include <stdio.h>
+
+#define MAX 10
+
+int main()
+{
+    int n, i, j;
+    int graph[MAX][MAX];
+    int visited[MAX] = {0};
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter adjacency matrix:\n");
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+
+    printf("\nApproximate Vertex Cover:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        for(j = i + 1; j < n; j++)
+        {
+            if(graph[i][j] == 1)
+            {
+                if(visited[i] == 0 && visited[j] == 0)
+                {
+                    visited[i] = 1;
+                    visited[j] = 1;
+                    printf("%d %d ", i, j);
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
+---
+
+OUTPUT
+
+Enter number of vertices: 4
+Enter adjacency matrix:
+0 1 1 0
+1 0 1 1
+1 1 0 1
+0 1 1 0
+
+Approximate Vertex Cover:
+0 1 2 3
+
+---
+
+RESULT
+
+The program successfully finds an approximate vertex cover for the given undirected graph using a greedy approach. The result may not always be optimal but it covers all edges efficiently.

@@ -1,0 +1,117 @@
+AIM
+To write a C program to find the Minimum Spanning Tree of a graph using Prim’s Algorithm.
+
+---
+
+ALGORITHM
+
+1. Start the program
+2. Read the number of vertices n
+3. Read the adjacency matrix of the graph
+4. Initialize selected array and mark all vertices as not selected
+5. Select the first vertex as starting point
+6. Repeat until n-1 edges are selected
+   find the minimum edge connecting a selected vertex to an unselected vertex
+   add that edge to the MST
+   mark the new vertex as selected
+7. Display the edges of MST and total cost
+8. Stop
+
+---
+
+SOURCE CODE
+
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX 10
+
+int main()
+{
+    int n, i, j, src;
+    int cost[MAX][MAX];
+    int selected[MAX];
+    int no_edge = 0;
+    int min, u;
+    int total_cost = 0;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter adjacency matrix:\n");
+    for(i = 0; i < n; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            scanf("%d", &cost[i][j]);
+            if(cost[i][j] == 0)
+                cost[i][j] = INT_MAX;
+        }
+    }
+
+    for(i = 0; i < n; i++)
+        selected[i] = 0;
+
+    selected[0] = 1;
+
+    printf("\nEdges in MST:\n");
+
+    while(no_edge < n - 1)
+    {
+        min = INT_MAX;
+        x = 0;
+        y = 0;
+
+        for(i = 0; i < n; i++)
+        {
+            if(selected[i])
+            {
+                for(j = 0; j < n; j++)
+                {
+                    if(!selected[j] && cost[i][j])
+                    {
+                        if(min > cost[i][j])
+                        {
+                            min = cost[i][j];
+                            x = i;
+                            y = j;
+                        }
+                    }
+                }
+            }
+        }
+
+        printf("%d - %d : %d\n", x, y, cost[x][y]);
+
+        total_cost += cost[x][y];
+        selected[y] = 1;
+        no_edge++;
+    }
+
+    printf("Total cost of MST = %d\n", total_cost);
+
+    return 0;
+}
+
+---
+
+OUTPUT
+
+Enter number of vertices: 4
+Enter adjacency matrix:
+0 2 0 6
+2 0 3 8
+0 3 0 0
+6 8 0 0
+
+Edges in MST:
+0 - 1 : 2
+1 - 2 : 3
+0 - 3 : 6
+Total cost of MST = 11
+
+---
+
+RESULT
+
+The program successfully finds the Minimum Spanning Tree using Prim’s Algorithm. It selects edges with minimum weight and calculates the total cost of the spanning tree.

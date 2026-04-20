@@ -1,0 +1,110 @@
+AIM
+To implement Randomized Quick Sort using divide and conquer technique by selecting a random pivot to improve performance.
+
+---
+
+ALGORITHM
+
+1. Start the program
+2. Read the number of elements n
+3. Read the array elements
+4. Apply quick sort
+   choose a random pivot
+   swap it with last element
+   partition the array into smaller and larger elements
+5. Recursively apply quick sort on left and right parts
+6. Display the sorted array
+7. Stop
+
+---
+
+SOURCE CODE
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int low, int high)
+{
+    int pivot = arr[high];
+    int i = low - 1;
+    int j;
+
+    for(j = low; j < high; j++)
+    {
+        if(arr[j] <= pivot)
+        {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+
+    swap(&arr[i + 1], &arr[high]);
+    return i + 1;
+}
+
+int randomPartition(int arr[], int low, int high)
+{
+    int random = low + rand() % (high - low + 1);
+    swap(&arr[random], &arr[high]);
+    return partition(arr, low, high);
+}
+
+void quickSort(int arr[], int low, int high)
+{
+    if(low < high)
+    {
+        int pi = randomPartition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main()
+{
+    int arr[50], n, i;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for(i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    srand(time(0));
+
+    quickSort(arr, 0, n - 1);
+
+    printf("Sorted array:\n");
+    for(i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+
+---
+
+OUTPUT
+
+Enter number of elements: 5
+Enter elements:
+5 2 9 1 6
+Sorted array:
+1 2 5 6 9
+
+---
+
+RESULT
+
+The program successfully implements randomized quick sort using divide and conquer method. Random pivot selection improves average performance and reduces chances of worst case.
